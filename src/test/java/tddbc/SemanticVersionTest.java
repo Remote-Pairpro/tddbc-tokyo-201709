@@ -3,6 +3,7 @@ package tddbc;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class SemanticVersionTest {
@@ -36,4 +37,48 @@ public class SemanticVersionTest {
         boolean actual = sut.equals(other);
         assertThat(actual, is(true));
     }
+
+    @Test
+    public void 同一バージョンのセマンティックバージョンはHash値も同一となる() {
+        SemanticVersion sut = new SemanticVersion(1, 4, 2);
+        SemanticVersion other = new SemanticVersion(1, 4, 2);
+        assertEquals(sut.hashCode(), other.hashCode());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void major番号にマイナス値を指定することは出来ない() {
+        new SemanticVersion(-1, 0, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void minor番号にマイナス値を指定することは出来ない() {
+        new SemanticVersion(0, -1, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void patch番号にマイナス値を指定することは出来ない() {
+        new SemanticVersion(0, 0, -1);
+    }
+
+    @Test
+    public void 下位互換性のあるバグ修正ならばpatchフィールドのインクリメントされる() {
+        SemanticVersion sut = new SemanticVersion(1, 4, 2);
+        SemanticVersion actual = sut.fixBugWithCompatibility();
+        assertThat(actual.toText(), is("1.4.3"));
+    }
+
+    @Test
+    public void 下位互換性のある機能追加を行う場合はminorフィールドをインクリメントされpatchが0となる() {
+        SemanticVersion sut = new SemanticVersion(1, 4, 2);
+        SemanticVersion actual = sut.addFixtureWithCompatibility();
+        assertThat(actual.toText(), is("1.5.0"));
+    }
+
+    @Test
+    public void 下位互換性を壊す変更が入る場合majorフィールドをインクリメントされminorとpatchは0となる() {
+        SemanticVersion sut = new SemanticVersion(1, 4, 2);
+        SemanticVersion actual = sut.changeWithoutCompatibility();
+        assertThat(actual.toText(), is("2.0.0"));
+    }
+
 }
