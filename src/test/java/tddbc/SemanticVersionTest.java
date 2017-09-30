@@ -20,4 +20,12 @@ public class SemanticVersionTest {
         String actual = sut.toText();
         assertThat(actual, is("0.0.0"));
     }
+
+    @Test
+    public void バージョン番号が異なる2つのセマンティックバージョンが等しく無いことが判定できる() {
+        SemanticVersion sut = new SemanticVersion(1, 4, 2);
+        SemanticVersion other = new SemanticVersion(0, 0, 0);
+        boolean actual = sut.equalsVersion(other);
+        assertThat(actual, is(false));
+    }
 }
