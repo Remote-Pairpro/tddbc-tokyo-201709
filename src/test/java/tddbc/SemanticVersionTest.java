@@ -28,4 +28,12 @@ public class SemanticVersionTest {
         boolean actual = sut.equalsVersion(other);
         assertThat(actual, is(false));
     }
+
+    @Test
+    public void バージョン番号が一致する2つのセマンティックバージョンが等しいことが判定できる() {
+        SemanticVersion sut = new SemanticVersion(1, 4, 2);
+        SemanticVersion other = new SemanticVersion(1, 4, 2);
+        boolean actual = sut.equalsVersion(other);
+        assertThat(actual, is(true));
+    }
 }

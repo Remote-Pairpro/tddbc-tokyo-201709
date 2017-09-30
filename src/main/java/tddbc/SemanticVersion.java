@@ -17,7 +17,7 @@ public class SemanticVersion {
     }
 
     public boolean equalsVersion(SemanticVersion other) {
-        return false;
+        return major == other.major && minor == other.minor && patch == other.patch;
     }
 }
 
