@@ -1,8 +1,6 @@
 package tddbc;
 
 public class SemanticVersion {
-
-
     public SemanticVersion(int i, int i1, int i2) {
     }
 
