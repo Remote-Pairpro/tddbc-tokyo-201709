@@ -25,7 +25,7 @@ public class SemanticVersionTest {
     public void バージョン番号が異なる2つのセマンティックバージョンが等しく無いことが判定できる() {
         SemanticVersion sut = new SemanticVersion(1, 4, 2);
         SemanticVersion other = new SemanticVersion(0, 0, 0);
-        boolean actual = sut.equalsVersion(other);
+        boolean actual = sut.equals(other);
         assertThat(actual, is(false));
     }
 
@@ -33,7 +33,7 @@ public class SemanticVersionTest {
     public void バージョン番号が一致する2つのセマンティックバージョンが等しいことが判定できる() {
         SemanticVersion sut = new SemanticVersion(1, 4, 2);
         SemanticVersion other = new SemanticVersion(1, 4, 2);
-        boolean actual = sut.equalsVersion(other);
+        boolean actual = sut.equals(other);
         assertThat(actual, is(true));
     }
 }

@@ -16,8 +16,11 @@ public class SemanticVersion {
         return String.format("%d.%d.%d", major, minor, patch);
     }
 
-    public boolean equalsVersion(SemanticVersion other) {
-        return major == other.major && minor == other.minor && patch == other.patch;
+    public boolean equals(Object other) {
+        SemanticVersion otherVersion = (SemanticVersion) other;
+        return major == otherVersion.major &&
+                minor == otherVersion.minor &&
+                patch == otherVersion.patch;
     }
 }
 
